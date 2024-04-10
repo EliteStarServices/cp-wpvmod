@@ -148,7 +148,7 @@ if (
 	) {
 	return;
 }
-require 'bh-update/plugin-update-checker.php';
+require 'vendor/bh-update/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 $MyUpdateChecker = PucFactory::buildUpdateChecker(
 	'https://cs.elite-star-services.com/wp-repo/?action=get_metadata&slug=cp-wpvmod', //Metadata URL.
