@@ -7,14 +7,14 @@ jobs:
       name: CPCS
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: CPCS get rules
           run: |
             wget https://raw.githubusercontent.com/ClassicPress/ClassicPress-Coding-Standards/main/phpcs.xml
             sed -i '/^\t<!-- start config -->.*/a\
               <file>.</file>
               ' phpcs.xml
-            sed -i '/MY_DOMAIN/ s//icons-for-cp/' phpcs.xml
+            sed -i '/MY_DOMAIN/ s//cwv-textdomain/' phpcs.xml
             cat phpcs.xml
         - name: CPCS checks
           uses: 10up/wpcs-action@stable
