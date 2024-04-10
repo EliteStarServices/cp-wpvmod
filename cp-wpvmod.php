@@ -6,10 +6,12 @@
 * Requires at least: 4.9
 * Tested up to: 6.5
 * Requires PHP: 7.4
+* Requires CP: 2.0
 * Author: Elite Star Services
 * Description: Allows Spoofing the WP Version for Installing Plugins & Themes in ClassicPress
+* Text Domain: cwv-textdomain
 *
-	* 
+	*
 	* @License:
 	* GPL v3 | https://elite-star-services.com/license/
     *
@@ -21,7 +23,7 @@
  * Plugin Activation
  *
 
-function cwv_activate() { 
+function cwv_activate() {
 
 }
 register_activation_hook( __FILE__, 'cwv_activate' );
@@ -41,7 +43,7 @@ function cwv_version_injector() {
         }
 
         if (isset($options['cwv_active'])) {
-            $wp_version = $cwv_ver;
+            $wp_version = $cwv_ver; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
         }
     }
 }
@@ -88,16 +90,19 @@ function cwv_register_settings() {
 }
 add_action( 'admin_init', 'cwv_register_settings' );
 
-function cwv_plugin_section_text() { 
-    echo 'Utility to Report an Alternate WordPress Version for ClassicPress v2<br>'; 
+function cwv_plugin_section_text() {
+    echo 'Utility to Report an Alternate WordPress Version for ClassicPress v2<br>';
     echo '<em>Aids in the Installation, Upgrade & Testing of Plugins & Themes</em>';
 //    print_r(get_option('cwv_plugin_options'));
 }
 
 function cwv_plugin_setting_wp_version() {
     $options = get_option( 'cwv_plugin_options' );
-    if (is_array($options)) { $cwv_db_ver = esc_attr( $options['wp_version'] ); } else { $cwv_db_ver = ''; }
-        echo "<input id='cwv_plugin_setting_wp_version' name='cwv_plugin_options[wp_version]' type='text' size='10' value='" . $cwv_db_ver . "' />";
+    $cwv_db_ver = '';
+    if (is_array($options)) {
+    	$cwv_db_ver = $options['wp_version'];
+    }
+     echo "<input id='cwv_plugin_setting_wp_version' name='cwv_plugin_options[wp_version]' type='text' size='10' value='" . esc_attr( $cwv_db_ver ) . "' />";
 }
 
 function cwv_plugin_setting_is_active() {
@@ -109,21 +114,21 @@ function cwv_plugin_setting_is_active() {
 function cwv_settings_page() {
 ?>
     <form action="options.php" method="post">
-        <?php 
+        <?php
         settings_fields( 'cwv_plugin_options' );
-        do_settings_sections( 'cwv_plugin' ); 
+        do_settings_sections( 'cwv_plugin' );
         echo '<hr>';
         ?>
-        <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save Settings' ); ?>" /> _ 
+        <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save Settings', 'cwv-textdomain' ); ?>" /> _
         <a class="button-secondary" href="https://elite-star-services.com/wordpress-development/">Visit Elite Star Services</a>
     </form>
 <?php
 }
 
 
-// SHOW WORDPRESS WARNING
+// Show WordPress Warning
 function cwv_warn_page() {
-    echo '<hr><h3 style="color:red;">WORDPRESS DETECTED - THIS PLUGIN IS FOR USE WITH CLASSICPRESS ONLY</h3>';
+    echo '<hr><h3 style="color:red;">WordPress detected - this plugin is for use with ClassicPress only</h3>';
 }
 
 
@@ -131,17 +136,23 @@ function cwv_warn_page() {
  * Plugin Deactivation
  */
 function cwv_deactivate() {
-    delete_option('cwv_plugin_options'); 
+    delete_option('cwv_plugin_options');
 }
 register_deactivation_hook( __FILE__, 'cwv_deactivate' );
 
 
-// Plugin Update Checker
-    require 'bh-update/plugin-update-checker.php';
-    use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-    $MyUpdateChecker = PucFactory::buildUpdateChecker(
-        'https://cs.elite-star-services.com/wp-repo/?action=get_metadata&slug=cp-wpvmod', //Metadata URL.
-        __FILE__, //Full path to the main plugin file.
-        'cp-wpvmod' //Plugin slug. Usually it's the same as the name of the directory.
-    );
+// Plugin Update Checker if not using ClassicPress Directory Integration plugin
+if (
+		version_compare(function_exists('classicpress_version') ? classicpress_version() : '0', '2', '>=') &&
+		is_plugin_active('classicpress-directory-integration/classicpress-directory-integration.php')
+	) {
+	return;
+}
+require 'bh-update/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$MyUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://cs.elite-star-services.com/wp-repo/?action=get_metadata&slug=cp-wpvmod', //Metadata URL.
+	__FILE__, //Full path to the main plugin file.
+	'cp-wpvmod' //Plugin slug. Usually it's the same as the name of the directory.
+);
 ?>
