@@ -3,7 +3,7 @@ Tags: ClassicPress
 Requires at least: 4.9
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 0.9.2
+Stable tag: 1.0.0
 
 == Description ==
 
@@ -11,11 +11,18 @@ Allows Spoofing the WP Version to Install Plugins and Themes in ClassicPress.
 
 == ChangeLog ==
 
+= 1.0.0 =
+5/12/24
+- Add Multisite Compatibility
+- Change Icon to WP Icon
+
 = 0.9.2 =
-Fix Fatal Error if is_plugin_active() not loaded - 4/13/24
+4/13/24
+- Fix Fatal Error if is_plugin_active() not loaded
 
 = 0.9.1 =
-Code Cleaned - 4/9/24
+4/9/24
+- Code Cleaned
 
 = 0.9.0 =
 **Initial Release Date - 4/4/24**

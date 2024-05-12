@@ -2,12 +2,13 @@
 /**
 * Plugin Name: WP Version Modifier for CP
 * Plugin URI: https://elite-star-services.com/
-* Version: 0.9.2
+* Version: 1.0.0
 * Requires at least: 4.9
 * Tested up to: 6.5
 * Requires PHP: 7.4
 * Requires CP: 2.0
 * Author: Elite Star Services
+* Network: true
 * Description: Allows Spoofing the WP Version for Installing Plugins & Themes in ClassicPress
 * Text Domain: cwv-textdomain
 *
@@ -62,7 +63,7 @@ function cwv_admin_menu() {
             'manage_options',
             'cwv-settings',
             'cwv_settings_page',
-            'dashicons-update'
+            'dashicons-wordpress-alt'
         );
     } else {
         add_menu_page(
@@ -75,8 +76,11 @@ function cwv_admin_menu() {
         );
     }
 }
-add_action( 'admin_menu', 'cwv_admin_menu' );
-
+if (is_multisite()) {
+    add_action( 'network_admin_menu', 'cwv_admin_menu' );
+} else {
+    add_action( 'admin_menu', 'cwv_admin_menu' );
+}
 
 // SETTINGS PAGE
 function cwv_register_settings() {
@@ -113,7 +117,7 @@ function cwv_plugin_setting_is_active() {
 
 function cwv_settings_page() {
 ?>
-    <form action="options.php" method="post">
+    <form action="../wp-admin/options.php" method="post">
         <?php
         settings_fields( 'cwv_plugin_options' );
         do_settings_sections( 'cwv_plugin' );
