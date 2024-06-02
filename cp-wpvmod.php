@@ -2,7 +2,7 @@
 /**
 * Plugin Name: WP Version Modifier for CP
 * Plugin URI: https://elite-star-services.com/
-* Version: 1.0.0
+* Version: 1.0.1
 * Requires at least: 4.9
 * Tested up to: 6.5
 * Requires PHP: 7.4
@@ -117,7 +117,7 @@ function cwv_plugin_setting_is_active() {
 
 function cwv_settings_page() {
 ?>
-    <form action="../wp-admin/options.php" method="post">
+    <form action="../options.php" method="post">
         <?php
         settings_fields( 'cwv_plugin_options' );
         do_settings_sections( 'cwv_plugin' );

@@ -3,13 +3,17 @@ Tags: ClassicPress
 Requires at least: 4.9
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 == Description ==
 
 Allows Spoofing the WP Version to Install Plugins and Themes in ClassicPress.
 
 == ChangeLog ==
+
+= 1.0.1 =
+6/3/24
+- Fix Error when Saving on Some Sites
 
 = 1.0.0 =
 5/12/24
