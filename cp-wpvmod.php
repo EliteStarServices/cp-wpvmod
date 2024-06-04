@@ -2,7 +2,7 @@
 /**
 * Plugin Name: WP Version Modifier for CP
 * Plugin URI: https://elite-star-services.com/
-* Version: 1.0.1
+* Version: 1.0.2
 * Requires at least: 4.9
 * Tested up to: 6.5
 * Requires PHP: 7.4
@@ -147,7 +147,7 @@ register_deactivation_hook( __FILE__, 'cwv_deactivate' );
 
 // Plugin Update Checker if not using ClassicPress Directory Integration plugin
 if ( ! function_exists( 'is_plugin_active' ) ) {
-     require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+     require_once( ABSPATH . '../wp-admin/includes/plugin.php' );
 }
 if (
 		version_compare(function_exists('classicpress_version') ? classicpress_version() : '0', '2', '>=') &&
