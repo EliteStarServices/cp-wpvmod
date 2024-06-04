@@ -13,7 +13,7 @@ Allows Spoofing the WP Version to Install Plugins and Themes in ClassicPress.
 
 = 1.0.2 =
 6/4/24
-- Roll back latest change (unresolved)
+- Another Save Error Adjustment...
 
 = 1.0.1 =
 6/3/24
