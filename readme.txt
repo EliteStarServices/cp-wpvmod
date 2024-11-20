@@ -1,15 +1,22 @@
 === WP Version Modifier for CP ===
 Tags: ClassicPress
 Requires at least: 4.9
-Tested up to: 6.5
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Requires CP: 2.0.0
+Stable tag: 1.1.0
 
 == Description ==
 
 Allows Spoofing the WP Version to Install Plugins and Themes in ClassicPress.
 
 == ChangeLog ==
+
+= 1.1.0 =
+11/20/24
+- Apply Blue Haze UI to Settings Page
+- Add Code to Insure Save Success Message Displayed
+- Code Cleanup
 
 = 1.0.2 =
 6/4/24

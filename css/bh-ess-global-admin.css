@@ -1,0 +1,23 @@
+/** ========================
+ *  Blue Haze Global Admin Area Styles
+ *  ========================
+ *  bh-ess-global-admin.css v1.0
+ */
+
+ .form-table {
+    border: 1px solid black;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 5px;
+    width:auto;
+    min-width:15%;
+    background:#fff;
+}
+ .form-table th, .form-table td {
+    border: 1px solid navy;
+    border-radius: 10px;
+    padding: 5px !important;
+    background:#f6f6ff;
+    width:auto;
+    margin-bottom: 0px;
+}

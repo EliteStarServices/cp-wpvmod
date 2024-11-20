@@ -2,9 +2,9 @@
 /**
 * Plugin Name: WP Version Modifier for CP
 * Plugin URI: https://elite-star-services.com/
-* Version: 1.0.2
+* Version: 1.1.0
 * Requires at least: 4.9
-* Tested up to: 6.5
+* Tested up to: 6.7
 * Requires PHP: 7.4
 * Requires CP: 2.0
 * Author: Elite Star Services
@@ -76,17 +76,66 @@ function cwv_admin_menu() {
         );
     }
 }
+
+
 if (is_multisite()) {
     add_action( 'network_admin_menu', 'cwv_admin_menu' );
+    // DISPLAY SAVE SUCCESS OR ERROR (Multisite)
+    if (!function_exists('bhna_save_settings_errors')) {
+        function bhna_save_settings_errors()
+        {
+            settings_errors();
+        }
+        add_action('network_admin_notices', 'bhna_save_settings_errors');
+    }
 } else {
     add_action( 'admin_menu', 'cwv_admin_menu' );
+    // DISPLAY SAVE SUCCESS OR ERROR (Single Site)
+    if (!function_exists('bh_save_settings_errors')) {
+        function bh_save_settings_errors()
+        {
+            settings_errors();
+        }
+        add_action('admin_notices', 'bh_save_settings_errors');
+    }
 }
+
+
+// DISPLAY SAVE SUCCESS OR ERROR
+if (!function_exists('bh_save_settings_errors')) {
+    function bh_save_settings_errors()
+    {
+        settings_errors();
+    }
+    add_action('admin_notices', 'bh_save_settings_errors');
+}
+
+
+// OPTION SETTINGS STYLES
+if (isset($_GET['page']) && $_GET['page'] == 'cwv-settings') {
+    if (!function_exists('bh_ess_AdminStyles')) {
+        function bh_ess_AdminStyles()
+        {
+            wp_enqueue_style('bh-ess-admin-styles', plugin_dir_url(__FILE__) . 'css/bh-ess-admin.css', array(), '1.0');
+        }
+        add_action('admin_enqueue_scripts', 'bh_ess_AdminStyles');
+    }
+    if (!function_exists('bh_ess_global_AdminStyles')) {
+        function bh_ess_global_AdminStyles()
+        {
+            wp_enqueue_style('bh-ess-global-admin-styles', plugin_dir_url(__FILE__) . 'css/bh-ess-global-admin.css', array(), '1.0');
+        }
+        add_action('admin_enqueue_scripts', 'bh_ess_global_AdminStyles');
+    }
+}
+
+
 
 // SETTINGS PAGE
 function cwv_register_settings() {
     global $wp_version;
     register_setting( 'cwv_plugin_options', 'cwv_plugin_options' );
-    add_settings_section( 'api_settings', 'WP Version Settings', 'cwv_plugin_section_text', 'cwv_plugin' );
+    add_settings_section( 'api_settings', 'WP Version Modifier', 'cwv_plugin_section_text', 'cwv_plugin' );
 
 //    add_settings_field( 'cwv_plugin_setting_token', 'Security Token<br><small style="font-weight:normal;">Secure Token based on Machine ID</small>', 'cwv_plugin_setting_token', 'cwv_plugin', 'api_settings' );
     add_settings_field( 'cwv_plugin_setting_wp_version', 'Set WordPress Version<br><small style="font-weight:normal;">Current Value: '.$wp_version.'</small>', 'cwv_plugin_setting_wp_version', 'cwv_plugin', 'api_settings' );
@@ -112,7 +161,7 @@ function cwv_plugin_setting_wp_version() {
 function cwv_plugin_setting_is_active() {
     $options = get_option( 'cwv_plugin_options' );
     if (is_array($options) && array_key_exists('cwv_active', $options)) { $cwv_db_active = esc_attr( $options['cwv_active'] ); } else { $cwv_db_active = '0'; }
-        echo "<input id='cwv_plugin_setting_is_active' name='cwv_plugin_options[cwv_active]' type='checkbox' value='1'" . checked( 1, $cwv_db_active, false ) . " />";
+        echo "<input class='bh-ess-ui-toggle' id='cwv_plugin_setting_is_active' name='cwv_plugin_options[cwv_active]' type='checkbox' value='1'" . checked( 1, $cwv_db_active, false ) . " />";
 }
 
 function cwv_settings_page() {
@@ -124,7 +173,7 @@ function cwv_settings_page() {
         echo '<hr>';
         ?>
         <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save Settings', 'cwv-textdomain' ); ?>" /> _
-        <a class="button-secondary" href="https://elite-star-services.com/wordpress-development/">Visit Elite Star Services</a>
+        <a class="button-secondary" href="https://elite-star-services.com/">Visit Elite Star Services</a>
     </form>
 <?php
 }
