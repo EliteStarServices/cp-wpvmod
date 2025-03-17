@@ -47,6 +47,4 @@ Allows Spoofing the WP Version to Install Plugins and Themes in ClassicPress.
 1. Upload
 2. Activate
 
-*Updates will be available in the dashboard like any other plugin*
-
 * WP Version has a Dashboard Menu to Access the Settings
